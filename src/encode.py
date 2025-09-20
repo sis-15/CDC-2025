@@ -1,13 +1,17 @@
 # Load dataset, normalize quantitative data, encode qualitative data, compute weighted overall score
+# Also exports the encoding columns for consistent validation
 
 import pandas as pd
 from sklearn.preprocessing import MultiLabelBinarizer
+import pickle
 
-# Load CSV
+# --- Load CSV ---
 df = pd.read_csv("data/raw/master.csv", quotechar='"')
 
-# Numeric columns
-df_numeric = df[["Full Name", "Space Flights", "Space Flight Hours", "Spacewalks", "Spacewalk Hours", "Achievement Count"]].copy()
+# --- Numeric columns ---
+df["Name"] = df["First Name"].fillna("") + " " + df["Last Name"].fillna("")
+df["Name"] = df["Name"].str.strip()  # remove extra spaces
+df_numeric = df[["Name", "Space Flights", "Space Flight Hours", "Spacewalks", "Spacewalk Hours", "Achievement Count"]].copy()
 df_numeric.columns = ["Name", "SpaceFlights", "FlightHours", "Spacewalks", "SpacewalkHours", "Achievements"]
 
 # Convert to numeric and fill missing
@@ -38,7 +42,7 @@ weights = {
 df_numeric["OverallScore"] = sum(df_numeric[col] * weight for col, weight in weights.items())
 df_numeric["OverallScore"] = df_numeric["OverallScore"].apply(lambda x: round(normalize(x, df_numeric["OverallScore"].min(), df_numeric["OverallScore"].max())))
 
-# Qualitative columns
+# --- Qualitative columns ---
 # Handle lists separated by semicolons
 df["UndergradMajorList"] = df["Undergrad Major"].fillna("").str.split(";").apply(lambda lst: [s.strip() for s in lst if s])
 df["GradMajorList"] = df["Graduate Major"].fillna("").str.split(";").apply(lambda lst: [s.strip() for s in lst if s])
@@ -65,6 +69,18 @@ alma_encoded = pd.DataFrame(mlb_alma.fit_transform(df["AlmaMaterList"]),
 df_final = pd.concat([df_numeric, undergrad_encoded, grad_encoded, alma_encoded,
                       df[["UndergradMajorList", "GradMajorList", "AlmaMaterList"]]], axis=1)
 
-# Save to CSV
+# Save processed CSV
 df_final.to_csv("data/processed/astronauts_scores.csv", index=False)
 print("Encoding complete.")
+
+# Save encoding columns for validation
+encoding_columns = {
+    "undergrad": list(undergrad_encoded.columns),
+    "grad": list(grad_encoded.columns),
+    "alma": list(alma_encoded.columns)
+}
+
+with open("models/encoding_columns.pkl", "wb") as f:
+    pickle.dump(encoding_columns, f)
+
+print("Encoding columns saved to encoding_columns.pkl.")
