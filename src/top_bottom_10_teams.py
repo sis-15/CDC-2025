@@ -14,10 +14,7 @@ criteria_columns = ["SpaceFlights_Score", "FlightHours_Score", "Spacewalks_Score
                     "SpacewalkHours_Score", "Achievements_Score", "OverallScore"]
 
 top_team = draft_fantasy_team(df, team_size=team_size, strategy="top")
-
-# Evil meta: try to get the worst team by sorting ascending and using top script
-bottom_team = draft_fantasy_team(df.sort_values("OverallScore", ascending=True),
-                                 team_size=team_size, strategy="top")
+bottom_team = draft_fantasy_team(df, team_size=team_size, strategy="bottom")
 
 fig, axes = plt.subplots(2, 1, figsize=(14, 8))
 fig.suptitle(f"Top and Bottom {team_size}-Member Teams with Individual Attributes", fontsize=16)

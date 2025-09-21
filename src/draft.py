@@ -6,6 +6,10 @@ def draft_fantasy_team(df, team_size=5, strategy="top"):
     if strategy == "top":
         # Just pick top N by OverallScore
         return df.sort_values("OverallScore", ascending=False).head(team_size)
+    
+    # Instead of just reversing order and using top strategy we can guarantee the bottom
+    elif strategy == "bottom":
+        return df.nsmallest(team_size, "OverallScore")
 
     elif strategy == "balanced":
         # Ensure mix of STEM vs non-STEM majors, different colleges, etc.
@@ -44,6 +48,9 @@ df = pd.read_csv("data/processed/astronauts_scores.csv")
 
 print("Top strategy draft:")
 print(draft_fantasy_team(df, team_size=5, strategy="top")[["Name", "OverallScore"]])
+
+print("Bottom strategy draft:")
+print(draft_fantasy_team(df, team_size=5, strategy="bottom")[["Name", "OverallScore"]])
 
 print("\nBalanced strategy draft:")
 balanced_team = draft_fantasy_team(df, team_size=5, strategy="balanced")
