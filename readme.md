@@ -1,5 +1,5 @@
 install python 3.11
-run ```pip install -r requirements.txr```
+run ```pip install -r requirements.txt```
 
 Steps to run in order:
 encode.py
