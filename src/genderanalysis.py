@@ -10,13 +10,13 @@ df_master = pd.read_csv("data/raw/master.csv", quotechar='"')
 df_scores["Gender"] = df_master.iloc[:, 3]
 
 # Quick summary of gender counts
-print("Gender distribution:")
-print(df_scores["Gender"].value_counts(), "\n")
+# print("Gender distribution:")
+# print(df_scores["Gender"].value_counts(), "\n")
 
 # Compare average OverallScore by gender
 avg_scores = df_scores.groupby("Gender")["OverallScore"].mean()
-print("Average OverallScore by gender:")
-print(avg_scores, "\n")
+# print("Average OverallScore by gender:")
+# print(avg_scores, "\n")
 
 # Optional: visualize distribution
 sns.boxplot(data=df_scores, x="Gender", y="OverallScore")
@@ -34,5 +34,7 @@ y_gender = df_scores["Gender"].apply(lambda x: 1 if x.upper() == "F" else 0)
 # Logistic regression to see if high OverallScore predicts gender representation
 logit_model = sm.Logit(y_gender, X)
 result = logit_model.fit(disp=False)
-print("Gender vs experience regression summary:")
-print(result.summary())
+# print("Gender vs experience regression summary:")
+# print(result.summary())
+plt.savefig("data/analysis/gender_analysis.png", dpi=300)
+plt.show()
