@@ -32,7 +32,6 @@ def extract_primary_degree(cell):
     try:
         parsed = ast.literal_eval(s)
         if isinstance(parsed, list) and parsed:
-            # return first element
             return str(parsed[0]).strip()
     except Exception:
         pass
@@ -153,6 +152,6 @@ ax.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0., title="D
 plt.savefig("data/analysis/flight_hours_vs_score.png", dpi=300, bbox_inches="tight")
 plt.show()
 
-# optional: print a few mapped examples for visual verification
-print("\nExamples (PrimaryDegree -> DegreeCategory):")
-print(df[["PrimaryDegree", "DegreeCategory"]].drop_duplicates().head(50).to_string(index=False))
+# Debug: print a few mapped examples for visual verification
+# print("\nExamples (PrimaryDegree -> DegreeCategory):")
+# print(df[["PrimaryDegree", "DegreeCategory"]].drop_duplicates().head(50).to_string(index=False))

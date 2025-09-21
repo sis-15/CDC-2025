@@ -5,12 +5,10 @@ import pandas as pd
 from sklearn.preprocessing import MultiLabelBinarizer
 import pickle
 
-# --- Load CSV ---
 df = pd.read_csv("data/raw/master.csv", quotechar='"')
 
-# --- Numeric columns ---
 df["Name"] = df["First Name"].fillna("") + " " + df["Last Name"].fillna("")
-df["Name"] = df["Name"].str.strip()  # remove extra spaces
+df["Name"] = df["Name"].str.strip()
 df_numeric = df[["Name", "Space Flights", "Space Flight Hours", "Spacewalks", "Spacewalk Hours", "Achievement Count"]].copy()
 df_numeric.columns = ["Name", "SpaceFlights", "FlightHours", "Spacewalks", "SpacewalkHours", "Achievements"]
 
@@ -31,7 +29,7 @@ for col in quant_cols:
     max_val = df_numeric[col].max()
     df_numeric[col + "_Score"] = df_numeric[col].apply(lambda x: round(normalize(x, min_val, max_val)))
 
-# Weighted overall score (including achievements)
+# Weighted overall score
 weights = {
     "SpaceFlights_Score": 0.25,
     "FlightHours_Score": 0.25,
@@ -69,7 +67,6 @@ alma_encoded = pd.DataFrame(mlb_alma.fit_transform(df["AlmaMaterList"]),
 df_final = pd.concat([df_numeric, undergrad_encoded, grad_encoded, alma_encoded,
                       df[["UndergradMajorList", "GradMajorList", "AlmaMaterList"]]], axis=1)
 
-# Save processed CSV
 df_final.to_csv("data/processed/astronauts_scores.csv", index=False)
 print("Encoding complete.")
 

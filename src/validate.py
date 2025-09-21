@@ -3,7 +3,6 @@ import pickle
 from sklearn.ensemble import RandomForestRegressor
 import joblib
 
-# Load the trained model
 model = joblib.load("models/astronaut_score_model.pkl")
 
 # Load encoding columns from training
@@ -14,17 +13,13 @@ undergrad_columns = encoding_cols["undergrad"]
 grad_columns = encoding_cols["grad"]
 alma_columns = encoding_cols["alma"]
 
-# Load mission data
 missions = pd.read_csv("data/raw/mission.csv", quotechar='"')
 
 # Process each mission
 for idx, mission in missions.iterrows():
     print(f"\nMission: {mission['Mission Name & Program']}")
 
-    # Extract members (remove quotes, split by commas)
     member_names = mission["Members"].replace('"', '').split(",")
-
-    # Load astronaut scores
     astronauts = pd.read_csv("data/processed/astronauts_scores.csv")
 
     # Select only the astronauts in this mission
