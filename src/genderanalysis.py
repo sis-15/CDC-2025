@@ -21,7 +21,6 @@ avg_scores = df_scores.groupby("Gender")["OverallScore"].mean()
 # Optional: visualize distribution
 sns.boxplot(data=df_scores, x="Gender", y="OverallScore")
 plt.title("Distribution of OverallScore by Gender")
-plt.show()
 
 # Regression to estimate conditional effect of gender
 # Using SpaceFlights, FlightHours, Spacewalks, SpacewalkHours, Achievements as controls
