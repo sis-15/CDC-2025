@@ -46,7 +46,7 @@ df["PrimaryDegree"] = df["UndergradMajorList"].apply(extract_primary_degree)
 df["PrimaryDegree"] = df["PrimaryDegree"].astype(str).str.strip()
 
 #Grouping each major into categories
-
+#ChatGPT sorted the entire json file based on the degree categories taken from Excel
 with open("data/raw/degree_categories.json", "r") as f:
     degree_categories = json.load(f)
 
