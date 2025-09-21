@@ -12,7 +12,6 @@ with open("models/encoding_columns.pkl", "rb") as f:
 undergrad_columns = encoding_cols["undergrad"]
 grad_columns = encoding_cols["grad"]
 alma_columns = encoding_cols["alma"]
-
 missions = pd.read_csv("data/raw/mission.csv", quotechar='"')
 
 # Process each mission

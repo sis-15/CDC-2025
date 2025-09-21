@@ -46,6 +46,7 @@ df["UndergradMajorList"] = df["Undergrad Major"].fillna("").str.split(";").apply
 df["GradMajorList"] = df["Graduate Major"].fillna("").str.split(";").apply(lambda lst: [s.strip() for s in lst if s])
 df["AlmaMaterList"] = df["Alma Mater"].fillna("").str.split(";").apply(lambda lst: [s.strip() for s in lst if s])
 
+# Lines 50-65 written by ChatGPT
 # One-hot encoding for majors
 mlb_undergrad = MultiLabelBinarizer()
 undergrad_encoded = pd.DataFrame(mlb_undergrad.fit_transform(df["UndergradMajorList"]),

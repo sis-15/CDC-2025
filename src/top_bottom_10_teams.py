@@ -22,7 +22,6 @@ bottom_team = draft_fantasy_team(df.sort_values("OverallScore", ascending=True),
 fig, axes = plt.subplots(2, 1, figsize=(14, 8))
 fig.suptitle(f"Top and Bottom {team_size}-Member Teams with Individual Attributes", fontsize=16)
 
-
 axes[0].axis("off")
 axes[0].table(cellText=top_team[["Name"] + criteria_columns].values,
               colLabels=["Name"] + criteria_columns,

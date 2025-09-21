@@ -115,7 +115,7 @@ if not unknown_samples.empty:
 
 # Create a color palette by category
 categories = sorted(df["DegreeCategory"].unique())
-palette = sns.color_palette("Set2", len(categories))  # Or any palette you like
+palette = sns.color_palette("Set2", len(categories))
 color_map = dict(zip(categories, palette))
 
 # Create figure with constrained layout
