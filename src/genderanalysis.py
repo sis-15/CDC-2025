@@ -3,8 +3,14 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Analyze gender differences in astronaut experience and mission scores
 
+
+
+# WARNING: Github won't render this image for whatever reason so run locally to see the plot
+
+
+
+# Analyze gender differences in astronaut experience and mission scores
 df_scores = pd.read_csv("data/processed/astronauts_scores.csv")
 df_master = pd.read_csv("data/raw/master.csv", quotechar='"')
 df_scores["Gender"] = df_master.iloc[:, 3]
