@@ -49,3 +49,5 @@ for idx, mission in missions.iterrows():
     avg_score = predicted_scores.mean()
     print(f"Predicted average mission score: {avg_score:.2f}")
     print(f"Mission success (real world): {mission['Success T/F']}")
+    for name, score in zip(member_names, predicted_scores):
+        print(f"{name}: {score:.2f}")
