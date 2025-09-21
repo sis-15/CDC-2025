@@ -1,12 +1,12 @@
-install python 3.11
+Install python 3.11 and
 run ```pip install -r requirements.txt```
 
-Steps to run in order:
-encode.py
-train.py
-validate.py
+Scripts to run in order:
+encode.py,
+train.py,
+validate.py,
 draft.py
 
-run any of the visualizer scripts once the above scripts are ran
+Run any of the visualizer scripts once the above scripts have already been ran
 
-images are generated in ```data/analysis/```
+Images are generated in ```data/analysis/```
