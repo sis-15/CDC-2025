@@ -19,6 +19,7 @@ for col in required_columns:
     if col not in df.columns:
         raise ValueError(f"Required column '{col}' not found in dataframe. Found columns: {list(df.columns)}")
 
+# Lines 23-41 written by ChatGPT
 # For plotting, we can assign a "primary degree" to each astronaut (first listed undergrad major)
 # Robust extractor: handles real lists, stringified lists, semicolon-separated strings, comma-separated strings.
 def extract_primary_degree(cell):
@@ -49,6 +50,7 @@ df["PrimaryDegree"] = df["PrimaryDegree"].astype(str).str.strip()
 with open("data/raw/degree_categories.json", "r") as f:
     degree_categories = json.load(f)
 
+# Lines 54-68 written by ChatGPT
 # Normalization helper that we apply to both the CSV degrees and JSON degrees
 def normalize_degree_text(s):
     if s is None:
@@ -73,6 +75,7 @@ for category, majors in degree_categories.items():
         if norm:  # avoid empty keys
             degree_to_category[norm] = category
 
+# Lines 79-99 written by ChatGPT
 # Map a degree string into a category using multiple strategies
 def map_degree_to_category(degree):
     if not degree or degree.lower() in ("nan", "none"):
@@ -102,7 +105,7 @@ df["DegreeCategory"] = df["PrimaryDegree"].apply(map_degree_to_category)
 total = len(df)
 mapped = (df["DegreeCategory"] != "Other/Unknown").sum()
 unknown = total - mapped
-print(f"Degree mapping: total={total}, mapped={mapped}, unknown={unknown}")
+# print(f"Degree mapping: total={total}, mapped={mapped}, unknown={unknown}")
 
 # Show the top unknown PrimaryDegree values for manual inspection
 unknown_samples = df[df["DegreeCategory"] == "Other/Unknown"]["PrimaryDegree"].value_counts().head(30)
@@ -117,11 +120,10 @@ color_map = dict(zip(categories, palette))
 
 # Create figure with constrained layout
 fig, ax = plt.subplots(figsize=(16, 10), constrained_layout=False)
-# leave room on right for legend
 fig.tight_layout(rect=[0, 0, 0.78, 1])
 
 # Scatter each degree (add small jitter scaled to score ranges)
-x_jitter_scale = 0.5  # adjust if needed
+x_jitter_scale = 0.5
 y_jitter_scale = 0.4
 
 for cat in categories:
@@ -139,16 +141,13 @@ for cat in categories:
         color=color_map[cat]
     )
 
-# Axis labels and title
+# Axis labels, title, legend
 ax.set_xlabel("Flight Hours Score", fontsize=12)
 ax.set_ylabel("Individual Score (OverallScore)", fontsize=14)
 ax.set_title("Flight Hours vs Individual Score by Degree Category", fontsize=14)
-
-# Legend outside plot
 plt.subplots_adjust(top = 0.92, right = 0.78, left = 0.08, bottom = 0.1)
 ax.legend(bbox_to_anchor=(1.02, 1), loc='upper left', borderaxespad=0., title="Degree Category", fontsize=14, ncol=1)
 
-# Save plot
 plt.savefig("data/analysis/flight_hours_vs_score.png", dpi=300, bbox_inches="tight")
 plt.show()
 

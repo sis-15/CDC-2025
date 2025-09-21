@@ -5,12 +5,9 @@ import seaborn as sns
 
 # Analyze gender differences in astronaut experience and mission scores
 
-# Load processed astronaut scores
 df_scores = pd.read_csv("data/processed/astronauts_scores.csv")
-
-# Load gender info from master.csv
 df_master = pd.read_csv("data/raw/master.csv", quotechar='"')
-df_scores["Gender"] = df_master.iloc[:, 3]  # column 4 is Gender
+df_scores["Gender"] = df_master.iloc[:, 3]
 
 # Quick summary of gender counts
 print("Gender distribution:")

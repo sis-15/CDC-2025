@@ -21,6 +21,7 @@ def draft_fantasy_team(df, team_size=5, strategy="top"):
         chosen_alma = set(team[0]["AlmaMaterList"])
 
         for _ in range(team_size - 1):
+            # Lines 25-32 written by ChatGPT
             # Prefer candidates that maximize diversity
             def diversity_score(row):
                 undergrad_overlap = len(set(row["UndergradMajorList"]) & chosen_undergrad)

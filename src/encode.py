@@ -40,7 +40,7 @@ weights = {
 df_numeric["OverallScore"] = sum(df_numeric[col] * weight for col, weight in weights.items())
 df_numeric["OverallScore"] = df_numeric["OverallScore"].apply(lambda x: round(normalize(x, df_numeric["OverallScore"].min(), df_numeric["OverallScore"].max())))
 
-# --- Qualitative columns ---
+# Qualitative columns
 # Handle lists separated by semicolons
 df["UndergradMajorList"] = df["Undergrad Major"].fillna("").str.split(";").apply(lambda lst: [s.strip() for s in lst if s])
 df["GradMajorList"] = df["Graduate Major"].fillna("").str.split(";").apply(lambda lst: [s.strip() for s in lst if s])
